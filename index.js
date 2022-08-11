@@ -3,7 +3,7 @@ const axios = require('axios');
 const app = express()
 const path = require('path');
 const dotenv = require('dotenv').config();
-const port = 5000
+const port = process.env.PORT
 
 app.get("/nasa/:APOD/:searchStartDate/:searchLastDate", (req,res) => {
   console.log(req);
