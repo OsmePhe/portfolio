@@ -2,6 +2,7 @@ const express = require('express')
 const axios = require('axios');
 const app = express()
 const path = require('path');
+const dotenv = require('dotenv').config();
 const port = 5000
 
 app.get("/nasa/:APOD/:searchStartDate/:searchLastDate", (req,res) => {
@@ -46,10 +47,9 @@ async function translateText(res) {
   }
 }
 async function searchAPOD(options) {
-  var key = 'JBEpdJhiuTuUFtFzEXwZ1zlnamrM1dbm38l23i5x';
   try {
     const response = await new Promise((resolve, reject) => {
-      axios.get('https://api.nasa.gov/planetary/apod?api_key='+key+'&start_date='+options.searchStartDate+'&end_date='+options.searchLastDate,{headers: {'Accept': 'application/json'}})
+      axios.get('https://api.nasa.gov/planetary/apod?api_key='+process.env.KEY_NASA+'&start_date='+options.searchStartDate+'&end_date='+options.searchLastDate,{headers: {'Accept': 'application/json'}})
       .then(res => {
           resolve(res);
       }).catch((error) => {
@@ -66,12 +66,10 @@ async function searchAPOD(options) {
   }
 }
 async function searchNEO(options) {
-  var key = 'JBEpdJhiuTuUFtFzEXwZ1zlnamrM1dbm38l23i5x';
-  console.log(options);
   try {
-    console.log('https://api.nasa.gov/neo/rest/v1/feed?api_key='+key+'&start_date='+options.searchStartDate+'&end_date='+options.searchLastDate);
+    console.log('https://api.nasa.gov/neo/rest/v1/feed?api_key='+process.env.KEY_NASA+'&start_date='+options.searchStartDate+'&end_date='+options.searchLastDate);
     const response = await new Promise((resolve, reject) => {
-      axios.get('https://api.nasa.gov/neo/rest/v1/feed?api_key='+key+'&start_date='+options.searchStartDate+'&end_date='+options.searchLastDate,{headers: {'Accept': 'application/json'}})
+      axios.get('https://api.nasa.gov/neo/rest/v1/feed?api_key='+process.env.KEY_NASA+'&start_date='+options.searchStartDate+'&end_date='+options.searchLastDate,{headers: {'Accept': 'application/json'}})
       .then(res => {
           resolve(res);
       }).catch((error) => {
